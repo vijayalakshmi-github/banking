@@ -1,11 +1,6 @@
 pipeline{
   agent any
 
-  environment{
-    imagename="vijayalakshmis/banking"
-    registryCredential = 'docker-hub-cred'
-    dockerImage = ''
-  }
   tools
   {
     maven 'MAVEN_3'
@@ -40,7 +35,7 @@ pipeline{
     stage('Docker Login') {
       steps{
         withCredentials([usernamePassword(credentialsId: 'docker-hub-cred', passwordVariable: 'pass', usernameVariable: 'un')]) {
-          sh "docker login -u ${env.un} -p ${env.pass}
+          sh "docker login -u ${env.un} -p ${env.pass}"
         }
 
       }
