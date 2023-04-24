@@ -1,8 +1,8 @@
 ---
 - name: Configure Docker on deployment server
-  hosts: server
+  hosts: all
   become: true
-  
+  connection: ssh
   tasks:
   - name: update
     command: sudo apt update
