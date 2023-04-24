@@ -1,6 +1,6 @@
 provider "aws"{
-	access_key = "${aws-cred.access_key}"
-        secret_key = "${aws-cred.secret_key}"
+        access_key = "${var.AWS_ACCESS_KEY_ID}"
+        secret_key = "${var.AWS_SECRET_ACCESS_KEY}"
 	region = "us-east-1"
 	
 }

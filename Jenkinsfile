@@ -5,7 +5,11 @@ pipeline{
     imagename="vijayalakshmis/banking"
     registryCredential = 'Docker'
     dockerImage = ''
+       
+    AWS_ACCESS_KEY_ID = credentials('aws-access-key-id')
+    AWS_SECRET_ACCESS_KEY = credentials('aws-secret-access-key')
   }
+
   tools
   {
     maven 'MAVEN_3'
@@ -31,29 +35,7 @@ pipeline{
       }
     }
 
-   /* stage('Build image') {
-      steps{
-             sh 'docker build -t vijayalakshmis/banking:latest .'
-            
-          } 
-        }
-    stage('Docker Login') {
-      steps{
-        withCredentials([usernamePassword(credentialsId: 'Docker', passwordVariable: 'pass', usernameVariable: 'un')]) {
-          sh "docker login -u ${env.un} -p ${env.pass}"
-        }
-
-      }
-    }
-
-    stage ('Push Image'){
-      steps{
-         sh 'docker push vijayalakshmis/banking:latest'
-      }
-
-
-    }*/
-
+ 
     stage('Build image') {
       steps{
         script {
