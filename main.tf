@@ -1,5 +1,8 @@
 provider "aws"{
+	access_key = "${aws-cred.access_key}"
+        secret_key = "${aws-cred.secret_key}"
 	region = "us-east-1"
+	
 }
 resource "aws_instance" "prod-server"{
 	ami = "ami-007855ac798b5175e"
