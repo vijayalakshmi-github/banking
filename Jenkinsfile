@@ -78,7 +78,7 @@ pipeline{
 
    stage ('Selenium testing'){
       steps{
-        chmod -R +x *
+        sh 'chmod -R +x *'
         sh 'java -jar banking.jar'
       }
     }
