@@ -70,18 +70,13 @@ pipeline{
         }
       }
     }
-    stage('Ansible-configure'){
+    stage ('Configure and Deploy Prod-server with Terraform, Ansible'){
       steps{
-        ansiblePlaybook become: true, credentialsId: 'machine2', disableHostKeyChecking: true, installation: 'ansible', inventory: '/etc/ansible/hosts', playbook: 'deploy.yml'
+        sh 'sudo chmod 600 aws.pem'
+        sh 'terraform init'
+        sh 'terraform validate'
+        sh 'terraform apply --auto-approve'
       }
     }
-
-   stage ('Selenium testing'){
-      steps{
-        sh 'chmod -R +x *'
-        sh 'java -jar banking.jar'
-      }
-    }
-
   }
 }
