@@ -14,9 +14,9 @@ resource "aws_instance" "prod-server"{
 	  Name = "prod-server"
 	}
 	provisioner "local-exec"{
-		command = "echo ${aws_instance.prod-server.public_ip} > inventory"
+                command = "echo server ansible_host= ${aws_instance.prod-server.public_ip} ansible_user=ubuntu ansible_ssh_private_key_file=aws.pem > inventory"
 	}
 	provisioner "local-exec"{
-		command = "ansible-playbook /var/lib/jenkins/workspace/banking/deploy.yml"
+		command = "ansible-playbook -i /var/lib/jenkins/workspace/banking/inventory /var/lib/jenkins/workspace/banking/deploy.yml"
 	}
 }
