@@ -1,6 +1,11 @@
 pipeline{
   agent any
-
+  
+  environment{
+    imagename="vijayalakshmis/banking"
+    registryCredential = 'Docker'
+    dockerImage = ''
+  }
   tools
   {
     maven 'MAVEN_3'
@@ -26,7 +31,7 @@ pipeline{
       }
     }
 
-    stage('Build image') {
+   /* stage('Build image') {
       steps{
              sh 'docker build -t vijayalakshmis/banking:latest .'
             
@@ -47,6 +52,23 @@ pipeline{
       }
 
 
+    }*/
+
+    stage('Build image') {
+      steps{
+        script {
+          dockerImage = docker.build imagename
+        }
+      }
+    }
+    stage('Push Image') {
+      steps{
+        script {
+          docker.withRegistry( '', registryCredential ) {
+             dockerImage.push('latest')
+          }
+        }
+      }
     }
     stage('Ansible-configure'){
       steps{
