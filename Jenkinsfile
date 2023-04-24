@@ -37,14 +37,21 @@ pipeline{
             
           } 
         }
-    stage('Push Image') {
+    stage('Docker Login') {
       steps{
         withCredentials([usernamePassword(credentialsId: 'docker-hub-cred', passwordVariable: 'pass', usernameVariable: 'un')]) {
-
-          sh 'docker push vijayalakshmis/banking:latest'
+          sh "docker login -u ${env.un} -p ${env.pass}
         }
 
       }
+    }
+
+    stage ('Push Image'){
+      steps{
+         sh 'docker push vijayalakshmis/banking:latest'
+      }
+
+
     }
     stage('Ansible-configure'){
       steps{
