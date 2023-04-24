@@ -33,18 +33,17 @@ pipeline{
 
     stage('Build image') {
       steps{
-        script {
-          dockerImage = docker.build imagename
+             sh 'docker build -t vijayalakshmis/banking:latest .'
+            
+          } 
         }
-      }
-    }
     stage('Push Image') {
       steps{
-        script {
-          docker.withRegistry( '', registryCredential ) {
-             dockerImage.push('latest')
-          }
+        withCredentials([usernamePassword(credentialsId: 'docker-hub-cred', passwordVariable: 'pass', usernameVariable: 'un')]) {
+
+          sh 'docker push vijayalakshmis/banking:latest'
         }
+
       }
     }
     stage('Ansible-configure'){
