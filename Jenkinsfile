@@ -1,5 +1,5 @@
 pipeline{
-  agnet any
+  agent any
 
   environment{
     imagename="vijayalakshmis/banking"
@@ -8,7 +8,7 @@ pipeline{
   }
   tools
   {
-    maven 'Maven_3'
+    maven 'MAVEN_3'
   }
   stages{
     stage('Checkout'){
@@ -19,8 +19,10 @@ pipeline{
     }
 
     stage('Build'){
-      echo 'Packaging'
-      sh 'mvn clean package'
+      steps{
+        echo 'Packaging'
+        sh 'mvn clean package'
+      }
     }
 
     stage('Generate test report'){
@@ -47,7 +49,7 @@ pipeline{
     }
     stage('Ansible-configure'){
       steps{
-        ansiblePlaybook credentialsId: 'machine2', disableHostKeyChecking: true, installation: 'ansible', inventory: '/etc/ansible/hosts', playbook: 'deploy.yml'
+        ansiblePlaybook become: true, credentialsId: 'machine2', disableHostKeyChecking: true, installation: 'ansible', inventory: '/etc/ansible/hosts', playbook: 'deploy.yml'
       }
     }
 
