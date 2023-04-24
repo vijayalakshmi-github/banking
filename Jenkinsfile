@@ -6,8 +6,6 @@ pipeline{
     registryCredential = 'Docker'
     dockerImage = ''
        
-    AWS_ACCESS_KEY_ID = credentials('aws-access-key-id')
-    AWS_SECRET_ACCESS_KEY = credentials('aws-secret-access-key')
   }
 
   tools
@@ -54,6 +52,11 @@ pipeline{
     }
     stage ('Configure and Deploy Prod-server with Terraform, Ansible'){
       steps{
+        
+        withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws-credentials', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+                    sh 'aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID'
+                    sh 'aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY'
+        }
         sh 'sudo chmod 600 aws.pem'
         sh 'terraform init'
         sh 'terraform validate'
