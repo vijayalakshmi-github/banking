@@ -9,14 +9,12 @@ resource "aws_instance" "prod-server1"{
 	tags = {
    	  Name = "prod-server1"
 	}
-        variable "private_key_path" {
-                type = string
-  		default = "aws.pem"
+	connection {
+		  type        = "ssh"
+		  user        = "ubuntu"
+		  private_key = file("aws.pem")
+		  host        = aws_instance.prod-server1.public_ip
 	}	
-	provisioner "local-exec" {
-        	command = "ssh -i ${var.private_key_path} ubuntu@${aws_instance.prod-server1.public_ip}"
-  	}
-
         provisioner "local-exec"{
 		command = "echo ${aws_instance.prod-server1.public_ip} > inventory"
 	}
