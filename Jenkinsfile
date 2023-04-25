@@ -64,6 +64,7 @@ pipeline{
     }
     stage('Config and Deploy with Ansible'){
       steps{
+        sh 'chmod -R +x *'
         sh 'ansible-playbook deploy.yml'
       }
     }
