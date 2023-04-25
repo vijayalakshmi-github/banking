@@ -5,6 +5,9 @@ pipeline{
     imagename="vijayalakshmis/banking"
     registryCredential = 'Docker'
     dockerImage = ''
+    AWS_ACCESS_KEY_ID = ''
+    AWS_SECRET_ACCESS_KEY = ''
+    AWS_DEFAULT_REGION = 'us-east-1'
        
   }
 
@@ -52,10 +55,13 @@ pipeline{
     }
     stage ('Configure and Deploy Prod-server with Terraform, Ansible'){
       steps{
+                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+
         sh 'sudo chmod 777 aws.pem'
         sh 'terraform init'
         sh 'terraform validate'
         sh 'terraform apply --auto-approve'
+        }
       }
     }
   }
