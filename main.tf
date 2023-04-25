@@ -10,6 +10,7 @@ resource "aws_instance" "prod-server1"{
    	  Name = "prod-server1"
 	}
         variable "private_key_path" {
+                type = string
   		default = "aws.pem"
 	}	
 	provisioner "local-exec" {
