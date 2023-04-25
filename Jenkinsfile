@@ -55,7 +55,12 @@ pipeline{
     }
     stage ('Configure and Deploy Prod-server with Terraform, Ansible'){
       steps{
-        withCredentials([<object of type com.cloudbees.jenkins.plugins.awscredentials.AmazonWebServicesCredentialsBinding>]) {     
+        withCredentials([[
+  $class: 'AmazonWebServicesCredentialsBinding',
+  accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+  secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
+  region: 'us-east-1'
+]]) {
         sh 'sudo chmod 777 aws.pem'
         sh 'terraform init'
         sh 'terraform validate'
