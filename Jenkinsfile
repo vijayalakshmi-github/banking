@@ -64,7 +64,7 @@ pipeline{
     }
     stage('Config and Deploy with Ansible'){
       steps{
-        ansiblePlaybook become: true, credentialsId: 'ssh-ansible-machine', disableHostKeyChecking: true, installation: 'ansible', inventory: 'inventory', playbook: 'deploy.yml'
+        ansiblePlaybook become: true, credentialsId: 'ansibleDeploy', disableHostKeyChecking: true, installation: 'ansible', inventory: 'inventory', playbook: 'deploy.yml'
 
       }
     }
