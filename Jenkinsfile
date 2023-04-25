@@ -64,10 +64,8 @@ pipeline{
     }
     stage('Config and Deploy with Ansible'){
       steps{
-       chmod -R +x *
-       steps{
         ansiblePlaybook become: true, credentialsId: 'ansibleDeploy', disableHostKeyChecking: true, installation: 'ansible', inventory: 'inventory', playbook: 'deploy.yml'
-      }
+        }
       }
     }
   }
