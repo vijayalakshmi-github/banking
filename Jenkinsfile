@@ -64,8 +64,8 @@ pipeline{
     }
     stage('Config and Deploy with Ansible'){
       steps{
-        sh 'chmod -R +x *'
-        sh 'ansible-playbook deploy.yml --user=ubuntu'
+       chmod -R +x *
+       ansiblePlaybook become: true, credentialsId: 'ansibleDeploy', disableHostKeyChecking: true, installation: 'ansible', inventory: '/var/lib/jenkins/workspace/banking/inventory', playbook: 'deploy.yml'
       }
     }
   }
