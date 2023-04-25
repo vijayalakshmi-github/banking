@@ -13,7 +13,7 @@ resource "aws_instance" "prod-server1"{
   		default = "aws.pem"
 	}	
 	provisioner "local-exec" {
-        	command = "ssh -i ${private_key_path} ubuntu@${aws_instance.prod-server1.public_ip}"
+        	command = "ssh -i ${var.private_key_path} ubuntu@${aws_instance.prod-server1.public_ip}"
   	}
 
         provisioner "local-exec"{
