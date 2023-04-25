@@ -64,8 +64,7 @@ pipeline{
     }
     stage('Config and Deploy with Ansible'){
       steps{
-        ansiblePlaybook become: true, credentialsId: 'ansibleDeploy', disableHostKeyChecking: true, installation: 'ansible', inventory: '/var/lib/jenkins/workspace/banking/inventory', playbook: 'deploy.yml'
-
+        sh 'ansible-playbook deploy.yml'
       }
     }
   }
