@@ -67,6 +67,5 @@ pipeline{
         ansiblePlaybook become: true, credentialsId: 'ansibleDeploy', disableHostKeyChecking: true, installation: 'ansible', inventory: 'inventory', playbook: 'deploy.yml'
         }
       }
-    }
   }
 }
