@@ -56,7 +56,7 @@ pipeline{
     stage ('Configure and Deploy Prod-server with Terraform, Ansible'){
       steps{
         
-        sh 'chmod 777 aws.pem'
+        sh 'chmod 700 aws.pem'
         sh 'terraform init'
         sh 'terraform validate'
         sh 'terraform apply --auto-approve'
