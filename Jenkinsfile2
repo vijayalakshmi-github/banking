@@ -53,7 +53,7 @@ pipeline{
         }
       }
     }
-    stage ('Configure and Deploy Prod-server with Terraform, Ansible'){
+    stage ('Configure and Create Prod-server with Terraform'){
       steps{
         
         sh 'sudo chmod 777 aws.pem'
@@ -62,5 +62,10 @@ pipeline{
         sh 'terraform apply --auto-approve'
       }
     }
+    stage('Config and Deploy with Ansible'){
+      steps{
+        ansiblePlaybook become: true, credentialsId: 'ansibleDeploy', disableHostKeyChecking: true, installation: 'ansible', inventory: 'inventory', playbook: 'deploy.yml'
+        }
+      }
   }
 }
