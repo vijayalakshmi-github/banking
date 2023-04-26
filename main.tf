@@ -16,6 +16,9 @@ resource "aws_instance" "prod-server1"{
 			private_key = file("./aws.pem")
 			host = aws_instance.prod-server1.public_ip
 	}
+	resource "time_sleep" "wait_two_minutes" {
+ 		 create_duration = "2m"
+	}
 
         provisioner "local-exec"{
 		command = "echo ${aws_instance.prod-server1.public_ip} > inventory"
