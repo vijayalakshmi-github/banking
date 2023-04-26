@@ -9,14 +9,10 @@ resource "aws_instance" "prod-server1"{
 	tags = {
    	  Name = "prod-server1"
 	}
-
 	provisioner "local-exec" {
-    	inline = [
-      	"sleep 60", // wait for 1 minute
-      	"echo 'Instance is ready'",
-	]
-	}
-         connection{
+	    command = "sleep 60 && echo 'Instance ready'"
+  	}
+        connection{
                 type = "ssh"
                 user = "ubuntu"
                 private_key = file("./aws.pem")
