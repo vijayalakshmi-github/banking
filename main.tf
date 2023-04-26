@@ -14,15 +14,16 @@ resource "aws_instance" "prod-server1"{
     	inline = [
       	"sleep 60", // wait for 1 minute
       	"echo 'Instance is ready'"
-      	// add your connection commands here, e.g. SSH into the instance
+               connection{
+                type = "ssh"
+                user = "ubuntu"
+                private_key = file("./aws.pem")
+                host = aws_instance.prod-server1.public_ip
+        }
+
+
    	 ]
   	}
-	connection{
-		type = "ssh"
-		user = "ubuntu"
-                private_key = file("./aws.pem")
-		host = aws_instance.prod-server1.public_ip
-	}
 
 	provisioner "local-exec"{
 		command = "echo ${aws_instance.prod-server1.public_ip} > inventory"
