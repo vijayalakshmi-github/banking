@@ -9,19 +9,18 @@ resource "aws_instance" "prod-server1"{
 	tags = {
    	  Name = "prod-server1"
 	}
-}
-	provisioner "remote-exec" {
-		connection{
+
+	connection{
 			type = "ssh"
 			user = "ubuntu"
 			private_key = file("./aws.pem")
 			host = aws_instance.prod-server1.public_ip
-		}
 	}
+
         provisioner "local-exec"{
 		command = "echo ${aws_instance.prod-server1.public_ip} > inventory"
 	}
 	provisioner "local-exec"{
 		command = "ansible-playbook /var/lib/jenkins/workspace/banking/deploy.yml"
 	}
-
+}
