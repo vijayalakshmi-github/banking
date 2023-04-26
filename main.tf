@@ -9,6 +9,7 @@ resource "aws_instance" "prod-server1"{
 	tags = {
    	  Name = "prod-server1"
 	}
+}
 	provisioner "remote-exec" {
 		connection{
 			type = "ssh"
@@ -23,4 +24,4 @@ resource "aws_instance" "prod-server1"{
 	provisioner "local-exec"{
 		command = "ansible-playbook /var/lib/jenkins/workspace/banking/deploy.yml"
 	}
-}
+
